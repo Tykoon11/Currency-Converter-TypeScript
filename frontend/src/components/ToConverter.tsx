@@ -4,17 +4,17 @@ type CurrencyProps = {
   baseCurrency: string;
   firstCurrency: string;
   ratesOptions: Array<string>;
-  baseValue: number;
+  convertValue: number;
   onChange: (value: any) => void;
 };
 
-const Converter = (props: CurrencyProps) => {
+const ToConverter = (props: CurrencyProps) => {
   return (
     <div>
       <div>
         <input
           type="number"
-          value={props.baseValue}
+          value={props.convertValue}
           aria-label="number"
           onChange={props.onChange}
         />
@@ -25,4 +25,4 @@ const Converter = (props: CurrencyProps) => {
   );
 };
 
-export default Converter;
+export default ToConverter;
