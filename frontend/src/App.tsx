@@ -21,9 +21,10 @@ function App() {
             setBaseCurrency(res.data.base);
             setFirstCurrency(Object.keys(res.data.rates)[0] as unknown as any);
             setRatesOptions(Object.keys(res.data.rates) as unknown as any);
+            setCurrencyOptions(Object.values(res.data.rates) as unknown as any);
 
             console.log(Object.keys(res.data.rates));
-            // console.log(Object.values(res.data.rates));
+            console.log(Object.values(res.data.rates));
           })
           .catch((err) => {
             console.log(err.message);
@@ -38,7 +39,7 @@ function App() {
   return (
     <div className="App">
       <h1>Heading</h1>
-      <Converter baseCurrency={baseCurrency} firstCurrency={firstCurrency} />
+      <Converter baseCurrency={baseCurrency} firstCurrency={firstCurrency} ratesOptions = {ratesOptions} currencyOptions= {currencyOptions}/>
     </div>
   );
 }

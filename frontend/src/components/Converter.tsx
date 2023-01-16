@@ -3,6 +3,8 @@ import React from "react";
 type CurrencyProps = {
   baseCurrency: string;
   firstCurrency: string;
+  ratesOptions: Array<string>;
+  currencyOptions: Array<number>;
 };
 
 const Converter = (props: CurrencyProps) => {
