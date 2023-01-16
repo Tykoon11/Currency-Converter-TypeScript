@@ -10,6 +10,7 @@ function App() {
   const [firstCurrency, setFirstCurrency] = useState("");
   const [ratesOptions, setRatesOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
+  const [baseValue, setBaseValue] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,10 +37,22 @@ function App() {
     fetchData();
   }, []);
 
+  const handleChange = (e: any) => {
+     console.log(baseValue);
+    setBaseValue(e.target.value)
+   
+  };
+
   return (
     <div className="App">
       <h1>Heading</h1>
-      <Converter baseCurrency={baseCurrency} firstCurrency={firstCurrency} ratesOptions = {ratesOptions} currencyOptions= {currencyOptions}/>
+      <Converter
+        baseCurrency={baseCurrency}
+        firstCurrency={firstCurrency}
+        ratesOptions={ratesOptions}
+        baseValue={baseValue}
+        onChange= {handleChange}
+      />
     </div>
   );
 }
