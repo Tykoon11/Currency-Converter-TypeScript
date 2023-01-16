@@ -6,9 +6,10 @@ import Converter from "./components/Converter";
 // const BASE_URL = process.env.REACT_BASE_URL as string;
 
 function App() {
+  const [baseCurrency, setBaseCurrency] = useState("");
+  const [firstCurrency, setFirstCurrency] = useState("");
+  const [ratesOptions, setRatesOptions] = useState([]);
   const [currencyOptions, setCurrencyOptions] = useState([]);
-  const [baseCurrency, setBaseCurrency] = useState();
-  const [firstCurrency, setFirstCurrency] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +20,9 @@ function App() {
             setCurrencyOptions([res.data.base] as unknown as any);
             setBaseCurrency(res.data.base);
             setFirstCurrency(Object.keys(res.data.rates)[0] as unknown as any);
-            // console.log(Object.keys(res.data.rates)[0]);
+            setRatesOptions(Object.keys(res.data.rates) as unknown as any);
+
+            console.log(Object.keys(res.data.rates));
             // console.log(Object.values(res.data.rates));
           })
           .catch((err) => {
@@ -35,11 +38,9 @@ function App() {
   return (
     <div className="App">
       <h1>Heading</h1>
-      <Converter />
+      <Converter baseCurrency={baseCurrency} firstCurrency={firstCurrency} />
     </div>
   );
 }
 
 export default App;
-
-// baseCurrency= {baseCurrency} firstCurrency= {firstCurrency} 
