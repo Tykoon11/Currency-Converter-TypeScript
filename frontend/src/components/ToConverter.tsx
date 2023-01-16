@@ -6,6 +6,7 @@ type CurrencyProps = {
   ratesOptions: Array<string>;
   convertValue: number;
   onChange: (value: any) => void;
+  onSelect: (value: any) => void;
 };
 
 const ToConverter = (props: CurrencyProps) => {
@@ -19,7 +20,13 @@ const ToConverter = (props: CurrencyProps) => {
           onChange={props.onChange}
         />
 
-        <select name="rate" id="option"></select>
+        <select value={props.firstCurrency} onChange={props.onSelect}>
+          {props.ratesOptions.map((rate: string) => (
+            <option key={rate} defaultValue={rate}>
+              {rate}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

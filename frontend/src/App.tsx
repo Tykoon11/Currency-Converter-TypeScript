@@ -10,7 +10,6 @@ function App() {
   const [baseCurrency, setBaseCurrency] = useState("");
   const [firstCurrency, setFirstCurrency] = useState("");
   const [ratesOptions, setRatesOptions] = useState([]);
-  const [currencyOptions, setCurrencyOptions] = useState([]);
   const [baseValue, setBaseValue] = useState(1);
   const [convertValue, setConvertValue] = useState("" as unknown as number);
 
@@ -20,15 +19,11 @@ function App() {
         await axios
           .get(`http://localhost:3000/convert`)
           .then((res) => {
-            setCurrencyOptions([res.data.base] as unknown as any);
+            const first = Object.keys(res.data.rates)[0] as unknown as any;
             setBaseCurrency(res.data.base);
             setConvertValue(Object.values(res.data.rates)[0] as unknown as any);
-            setFirstCurrency(Object.keys(res.data.rates)[0] as unknown as any);
+            setFirstCurrency(first);
             setRatesOptions(Object.keys(res.data.rates) as unknown as any);
-            setCurrencyOptions(Object.values(res.data.rates) as unknown as any);
-
-            console.log(Object.keys(res.data.rates));
-            console.log(Object.values(res.data.rates));
           })
           .catch((err) => {
             console.log(err.message);
@@ -58,6 +53,9 @@ function App() {
         ratesOptions={ratesOptions}
         baseValue={baseValue}
         onChange={handleToChange}
+        onSelect={(e) => {
+          setBaseCurrency(e.target.value);
+        }}
       />
       <br />
       <br />
@@ -67,6 +65,9 @@ function App() {
         ratesOptions={ratesOptions}
         convertValue={convertValue}
         onChange={handleFromChange}
+        onSelect={(e) => {
+          setFirstCurrency(e.target.value);
+        }}
       />
     </div>
   );

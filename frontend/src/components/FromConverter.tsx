@@ -6,6 +6,7 @@ type CurrencyProps = {
   ratesOptions: Array<string>;
   baseValue: number;
   onChange: (value: any) => void;
+  onSelect: (value: any) => void;
 };
 
 const FromConverter = (props: CurrencyProps) => {
@@ -18,7 +19,13 @@ const FromConverter = (props: CurrencyProps) => {
         onChange={props.onChange}
       />
 
-      <select name="rate" id="option"></select>
+      <select value={props.baseCurrency} onChange={props.onSelect}>
+        {props.ratesOptions.map((rate) => (
+          <option key={rate} value={rate}>
+            {rate}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
