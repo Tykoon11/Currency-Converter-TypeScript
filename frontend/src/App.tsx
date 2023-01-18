@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import axios from "axios";
-import FromConverter from "./components/FromConverter";
-import ToConverter from "./components/ToConverter";
+import Converter from "./components/Converter";
 
 // const BASE_URL = process.env.REACT_BASE_URL as string;
 
 function App() {
+  const [ratesOptions, setRatesOptions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("");
   const [firstCurrency, setFirstCurrency] = useState("");
-  const [ratesOptions, setRatesOptions] = useState([]);
+
   const [baseValue, setBaseValue] = useState(1);
-  const [convertValue, setConvertValue] = useState("" as unknown as number);
+  const [convertValue, setConvertValue] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,11 +19,13 @@ function App() {
         await axios
           .get(`http://localhost:3000/convert`)
           .then((res) => {
+            setRatesOptions(Object.keys(res.data.rates) as unknown as any);
             const first = Object.keys(res.data.rates)[0] as unknown as any;
             setBaseCurrency(res.data.base);
-            setConvertValue(Object.values(res.data.rates)[0] as unknown as any);
             setFirstCurrency(first);
-            setRatesOptions(Object.keys(res.data.rates) as unknown as any);
+
+            setConvertValue(Object.values(res.data.rates)[0] as unknown as any);
+            console.log(ratesOptions);
           })
           .catch((err) => {
             console.log(err.message);
@@ -37,34 +39,32 @@ function App() {
 
   const handleToChange = (e: any) => {
     console.log(baseValue);
-    setBaseValue(e.target.value);
+    setConvertValue(e.target.value);
   };
   const handleFromChange = (e: any) => {
     console.log(baseValue);
-    setConvertValue(e.target.value);
+    setBaseValue(e.target.value);
   };
 
   return (
     <div className="App">
       <h1>Heading</h1>
-      <FromConverter
-        baseCurrency={baseCurrency}
-        firstCurrency={firstCurrency}
+      <Converter
+        selectedCurrency={baseCurrency}
         ratesOptions={ratesOptions}
-        baseValue={baseValue}
-        onChange={handleToChange}
+        inputValue={baseValue}
+        onChange={handleFromChange}
         onSelect={(e) => {
           setBaseCurrency(e.target.value);
         }}
       />
       <br />
       <br />
-      <ToConverter
-        baseCurrency={baseCurrency}
-        firstCurrency={firstCurrency}
+      <Converter
+        selectedCurrency={firstCurrency}
         ratesOptions={ratesOptions}
-        convertValue={convertValue}
-        onChange={handleFromChange}
+        inputValue={convertValue}
+        onChange={handleToChange}
         onSelect={(e) => {
           setFirstCurrency(e.target.value);
         }}

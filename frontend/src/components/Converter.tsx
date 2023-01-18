@@ -1,25 +1,24 @@
 import React from "react";
 
 type CurrencyProps = {
-  baseCurrency: string;
-  firstCurrency: string;
+  selectedCurrency: string;
   ratesOptions: Array<string>;
-  baseValue: number;
+  inputValue: number;
   onChange: (value: any) => void;
   onSelect: (value: any) => void;
 };
 
-const FromConverter = (props: CurrencyProps) => {
+const Converter = (props: CurrencyProps) => {
   return (
     <div>
       <input
         type="number"
-        value={props.baseValue}
+        value={props.inputValue}
         aria-label="number"
         onChange={props.onChange}
       />
 
-      <select value={props.baseCurrency} onChange={props.onSelect}>
+      <select value={props.selectedCurrency} onChange={props.onSelect}>
         {props.ratesOptions.map((rate) => (
           <option key={rate} value={rate}>
             {rate}
@@ -30,4 +29,4 @@ const FromConverter = (props: CurrencyProps) => {
   );
 };
 
-export default FromConverter;
+export default Converter;
