@@ -9,9 +9,8 @@ function App() {
   const [ratesOptions, setRatesOptions] = useState([]);
   const [baseCurrency, setBaseCurrency] = useState("");
   const [firstCurrency, setFirstCurrency] = useState("");
+  const [amount, setAmount] = useState(1);
 
-  const [baseValue, setBaseValue] = useState(1);
-  const [convertValue, setConvertValue] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,9 +22,8 @@ function App() {
             const first = Object.keys(res.data.rates)[0] as unknown as any;
             setBaseCurrency(res.data.base);
             setFirstCurrency(first);
-
-            setConvertValue(Object.values(res.data.rates)[0] as unknown as any);
-            console.log(ratesOptions);
+            // setConvertValue(Object.values(res.data.rates)[0] as unknown as any);
+            // console.log(ratesOptions);
           })
           .catch((err) => {
             console.log(err.message);
@@ -37,14 +35,16 @@ function App() {
     fetchData();
   }, []);
 
-  const handleToChange = (e: any) => {
-    console.log(baseValue);
-    setConvertValue(e.target.value);
-  };
   const handleFromChange = (e: any) => {
-    console.log(baseValue);
-    setBaseValue(e.target.value);
+    // setBaseValue(e.target.value);
   };
+  const handleToChange = (e: any) => {
+    // setConvertValue(e.target.value);
+  };
+
+  useEffect(() => {
+    
+  }, []);
 
   return (
     <div className="App">
@@ -52,7 +52,7 @@ function App() {
       <Converter
         selectedCurrency={baseCurrency}
         ratesOptions={ratesOptions}
-        inputValue={baseValue}
+        inputValue={amount}
         onChange={handleFromChange}
         onSelect={(e) => {
           setBaseCurrency(e.target.value);
@@ -63,7 +63,7 @@ function App() {
       <Converter
         selectedCurrency={firstCurrency}
         ratesOptions={ratesOptions}
-        inputValue={convertValue}
+        inputValue={amount} 
         onChange={handleToChange}
         onSelect={(e) => {
           setFirstCurrency(e.target.value);
